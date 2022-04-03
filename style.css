@@ -1,182 +1,89 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Varela+Round&display=swap');
 
-* {
+*{
   margin: 0;
+  box-sizing: border-box;
   padding: 0;
-  box-sizing: inherit;
   font-family: 'Poppins', sans-serif;
 font-family: 'Varela Round', sans-serif;
 }
 
-:root{
-  --text: #112A46;
-  --back: #ACC8E5;
-}
-
-html {
-  font-size: 62.5%;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: system-ui;
-  color: #555;
-  background-color: var(--back);
-  min-height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.container {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-}
-
-.countries {
-  /* margin-bottom: 8rem; */
-  display: flex;
-
-  font-size: 2rem;
-  opacity: 0;
-  transition: opacity 1s;
-  position: relative;
-}
-
-.country {
-  background-color: var(--back);
-  box-shadow: 0 2rem 5rem 1.5rem rgba(0, 0, 0, 0.3);
-  font-size: 1.8rem;
-  width: 30rem;
-  border-radius: 0.7rem;
-  margin: 0 3rem;
-  position: relative;
-  /* overflow: hidden; */
-  color: var(--text);
-  /* border: 3px solid var(--text); */
-}
-
-.neighbour::before {
-  content: 'Neighbour country';
-  width: 100%;
-  position: absolute;
-  top: -4rem;
-
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #888;
-}
-
-.neighbour {
-  transform: scale(0.8) translateY(1rem);
-  margin-left: 0;
-}
-
-.country__img {
-  width: 30rem;
-  height: 17rem;
-  object-fit: cover;
-  background-color: #eee;
-  border-top-left-radius: 0.7rem;
-  border-top-right-radius: 0.7rem;
-}
-
-.country__data {
-  padding: 2.5rem 3.75rem 3rem 3.75rem;
-}
-
-.country__name {
-  font-size: 2.7rem;
-  margin-bottom: 0.7rem;
-}
-
-.country__region {
-  font-size: 1.4rem;
-  margin-bottom: 2.5rem;
-  text-transform: uppercase;
-  color: #888;
-}
-
-.country__row:not(:last-child) {
-  margin-bottom: 1rem;
-}
-
-.country__row span {
-  display: inline-block;
-  margin-right: 2rem;
-  font-size: 2.4rem;
-}
-
-.btn-country {
-  border: none;
-  font-size: 2rem;
-  padding: 2rem 5rem;
-  border-radius: 0.7rem;
-  color: white;
-  background-color: orangered;
-  cursor: pointer;
-}
-
-.images {
-  display: flex;
-}
-
-.images img {
-  display: block;
-  width: 80rem;
-  margin: 4rem;
-}
-
-.images img.parallel {
-  width: 40rem;
-  margin: 2rem;
-  border: 3rem solid white;
-  box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
-}
-
-.search {
   width: 100vw;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  margin-bottom: 100px;
-}
-
-.search_input {
-  padding: 10px;
-  width: 400px;
-  margin-bottom: 100px;
-  border-radius: 10px;
-  height: 50px;
-  
-}
-
-.input_btn {
-  border: 2px solid rebeccapurple;
-  padding: 10px;
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-}
-
-.ex {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 11;
-  background-color: var(--back);
-  color: var(--text);
-  width: 50px;
-  height: 50px;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  font-size: 25px;
+  background-image: url(./img/mehmet-turgut-kirkgoz-JyTN4fxWriM-unsplash.jpg);
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(8px);
   
+}
+
+.app-wrap {
+  width: 70vw;
+  height: 80vh;
+  background-image: url(./img/mehmet-turgut-kirkgoz-JyTN4fxWriM-unsplash.jpg);
+  background-size: cover;
+  background-size: 70vw 80vh;
+  box-shadow: 0 0 20px black;
+  backdrop-filter: blur(80px);
+  border-radius: 10px;
+}
+
+main {
+  width: 100%;
+  height: 70%;
+  
+  color: rgb(64, 50, 50);
+  padding: 20px;
+  text-align: center;
+}
+
+.city {
+  font-size: 50px;
+  margin-top: 50px;
+}
+
+.data {
+  margin-bottom: 120px;
+  font-size: 20px;
+}
+
+
+.temp {
+  font: 30px;
+}
+
+.main-temp {
+  font-size: 30px;
+  line-height: 40px;
+  margin-bottom: 30px;
+  color: black;
+  font-weight: 650;
+}
+
+
+
+header {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  
+}
+
+input {
+  border: none;
+  border-bottom: 5px solid wheat;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 20px;
+  width: 100%;
+  height: 20px;
+  padding: 20px;
+  margin-top: 90px;
+}
+
+input::placeholder{
+  color: wheat;
 }
