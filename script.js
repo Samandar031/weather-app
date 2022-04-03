@@ -1,143 +1,87 @@
 "use strict";
 
-const btn = document.querySelector(".btn-country");
-const countriesContainer = document.querySelector(".countries");
+let city = document.querySelector(" .city");
+let now = new Date();
+let date = document.querySelector(".data");
+let temp = document.querySelector(".temp");
+let havo = document.querySelector(".weater");
+let polniy = document.querySelector(".polniy");
 
-///////////////////////////////////////
-
-// const request = new XMLHttpRequest();
-
-// // 1.konvertcha ochish ro'yhatlarni olvolamiz
-// request.open('GET', 'https://restcountries.com/v2/all');
-
-// // 2.bu xatni yuboryapmiz
-// request.send();
-
-// // 3.barcha ma'lumotlar to'liqligicha yaratilgandan keyin ishlaydi
-// request.addEventListener('load', function () {
-//   // 4.kelayotgan arrayni obyekt qilib olishimiz kk
-//   const [data] = JSON.parse(request.responseText);
-//   console.log(data);
-
-//   let html = `
-//     <article class="country">
-//     <img class="country__img" src="${data.flag}" />
-//     <div class="country__data">
-//     <h3 class="country__name">${data.name}</h3>
-//     <h4 class="country__region">${data.region}</h4>
-//     <p class="country__row"><span>👫</span>${(
-//       data.population / 1000000
-//     ).toFixed(1)}</p>
-//         <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-//         <p class="country__row"><span>💰</span>${
-//           data.currencies ? data.currencies[0].code : data.currencie
-//         }</p>
-//         </div>
-//         </article>
-//         `;
-//   countriesContainer.insertAdjacentHTML('beforeend', html);
-//   countriesContainer.style.opacity = 1;
-// });
-
-let input = document.querySelector(".search_input");
-let btnInput = document.querySelector(".input_btn");
-
-let set = new Set([]);
-let boshqa;
-let d = [];
-let html;
-
-const getCountry = function (country) {
-  // 1.construktorni yaratib olamiz
-  const request = new XMLHttpRequest();
-
-  // 2.konvertcha ochish ro'yhatlarni olvolamiz
-  request.open("GET", `https://restcountries.com/v2/name/${country}`);
-
-  // 3.bu xatni yuboryapmiz
-  request.send();
-
-  // 4.barcha ma'lumotlar to'liqligicha yaratilgandan keyin ishlaydi
-  request.addEventListener("load", function () {
-    // 5.kelayotgan arrayni obyekt qilib olishimiz kk
-    const [data] = JSON.parse(request.responseText);
-
-    render(data);
-  });
+const Api = {
+  key: "a0fa15435608ce63aca59464d4cc3fb1",
+  baseurl: "https://api.openweathermap.org/data/2.5/",
 };
 
-const getWeather = (country) => {
-  const weather = new XMLHttpRequest();
-  weather.open(
-    "GET",
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/[uzbekistan]/[01]/[03]?key=YOUR_API_KEY )`
-  );
-  weather.send();
-  weather.addEventListener("laod", function () {
-    console.log(weather);
-  });
-};
+let search = document.querySelector(".search-box");
 
-getCountry("uzbekistan");
+search.addEventListener("keypress", getQuery);
 
-countriesContainer.addEventListener("click", function (e) {
-  if (e.target.classList.contains("ex")) {
-    e.target.closest(".country").remove();
-    set.delete(e.target.closest(".country").id);
-    [...d] = set;
-    local();
+function getQuery(e) {
+  if (e.keyCode == 13) {
+    getResults(search.value);
+    console.log(search.value);
+    search.value = "";
   }
-});
-
-getLocal();
-
-btnInput.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  boshqa = input.value;
-
-  if (!d.includes(boshqa)) {
-    d.push(boshqa);
-    getCountry(boshqa);
-    local();
-    set.add(boshqa);
-  } else {
-    alert("Bor bu yerda");
-  }
-
-  input.value = "";
-});
-
-let local = () => {
-  localStorage.setItem("arr", JSON.stringify(d));
-};
-
-function getLocal() {
-  let data = JSON.parse(localStorage.getItem("arr"));
-  d = data;
-  d.forEach((element) => {
-    getCountry(element);
-  });
 }
 
-function render(data, className) {
-  html = `  
-  <article class="country ${className}" id="${boshqa}">
-  <div class="ex"><i class="fa-solid fa-xmark"></i></div>
-  <img class="country__img" src="${data.flag}" />
-  <div class="country__data">
-  <h3 class="country__name">${data.name}</h3>
-  <h4 class="country__region">${data.region}</h4>
-  <p class="country__row"><span>👫</span>${(data.population / 1000000).toFixed(
-    1
-  )}</p>
-      <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-      <p class="country__row"><span>💰</span>${
-        data.currencies ? data.currencies[0].code : data.currencie
-      }</p>
-      </div>
-      </article>
-      `;
-  countriesContainer.insertAdjacentHTML("beforeend", html);
-  countriesContainer.style.opacity = 1;
+function getResults(query) {
+  fetch(`${Api.baseurl}weather?q=${query}&units=metric&APPID=${Api.key}`)
+    .then((weather) => {
+      return weather.json();
+    })
+    .then(displayResult);
+}
+
+function displayResult(weather) {
+  console.log(weather);
+  city.innerHTML = `${weather.name}`;
+
+  // html file ga datalarni qo'shamiz
+  date.innerHTML = dataBuild(now);
+
+  // temperaturani qo'shamiz
+  temp.innerHTML = `${Math.round(weather.main.temp)}°C `;
+
+  // ob havoni kiritamiz
+  havo.innerHTML = `${weather.weather[0].main}`;
+
+  // polniy kun davomidagini ko'ramiz
+  polniy.innerHTML = `${Math.round(weather.main.temp_min)} °C / ${Math.round(
+    weather.main.temp_max
+  )} °C`;
+}
+
+function dataBuild(s) {
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  let day = days[s.getDay()];
+  let date = s.getDate();
+  let month = months[s.getMonth()];
+  let year = s.getFullYear();
+
+  return `${day} ${date} ${month} ${year}`;
 }
