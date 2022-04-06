@@ -32,6 +32,7 @@ function getResults(query) {
     .then(displayResult);
 }
 
+// bu qismda ob havoni chaqirib htmlga chiqaramiz
 function displayResult(weather) {
   console.log(weather);
   city.innerHTML = `${weather.name}`;
